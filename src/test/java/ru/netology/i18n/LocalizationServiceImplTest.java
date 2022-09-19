@@ -9,7 +9,7 @@ import ru.netology.entity.Country;
 
 import java.util.stream.Stream;
 
-@DisplayName("Тест LocalService")
+@DisplayName("Тест класса LocalService")
 @TestMethodOrder(OrderAnnotation.class)
 class LocalizationServiceImplTest {
     private static LocalizationServiceImpl localizationService;
@@ -21,7 +21,7 @@ class LocalizationServiceImplTest {
 
     @Test
     @Order(1)
-    @DisplayName("Тест метода public String locale. Россия.")
+    @DisplayName("Тест метода locale. Россия.")
     void localeTest() {
         Assertions.assertEquals("Добро пожаловать",
                 localizationService.locale(Country.RUSSIA));
@@ -29,7 +29,7 @@ class LocalizationServiceImplTest {
 
     @Order(2)
     @ParameterizedTest
-    @DisplayName("Тест метода public String locale. All countries.")
+    @DisplayName("Тест метода locale. All countries.")
     @MethodSource("getArguments")
     void localeTest1(Country country, String expected) {
         Assertions.assertEquals(expected, localizationService.locale(country));

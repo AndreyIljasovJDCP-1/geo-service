@@ -30,7 +30,7 @@ public class GeoServiceImplTest {
 
     @Test
     @Order(1)
-    @DisplayName("Тест метода Location byIp. LOCALHOST_IP")
+    @DisplayName("Тест метода Location byIp. LOCALHOST = 127.0.0.1")
     void test_LocalHost_IP_Location() {
         Location location = new Location(null, null, null, 0);
         int comparing = myComparator.compare(location, geoService.byIp("127.0.0.1"));
@@ -39,7 +39,7 @@ public class GeoServiceImplTest {
 
     @Test
     @Order(2)
-    @DisplayName("Тест метода Location byIp. MOSCOW_IP")
+    @DisplayName("Тест метода Location byIp. MOSCOW_IP = 172.0.32.11")
     void test_Moscow_IP_Location() {
         Location location = new Location("Moscow", Country.RUSSIA, "Lenina", 15);
         int comparing = myComparator.compare(location, geoService.byIp("172.0.32.11"));
@@ -48,7 +48,7 @@ public class GeoServiceImplTest {
 
     @Test
     @Order(3)
-    @DisplayName("Тест метода Location byIp. NEW_YORK_IP")
+    @DisplayName("Тест метода Location byIp. NEW_YORK_IP = 96.44.183.149")
     void test_NY_IP_Location() {
         Location location = new Location("New York", Country.USA, " 10th Avenue", 32);
         int comparing = myComparator.compare(location, geoService.byIp("96.44.183.149"));
@@ -57,7 +57,7 @@ public class GeoServiceImplTest {
 
     @Test
     @Order(4)
-    @DisplayName("Тест метода Location byIp. MOSCOW_IP -> 172.*")
+    @DisplayName("Тест метода Location byIp. MOSCOW_IP starts with 172.*")
     void test_172_IP_Location() {
         Location location = new Location("Moscow", Country.RUSSIA, null, 0);
         int comparing = myComparator.compare(location, geoService.byIp("172.0.0.0"));
@@ -66,7 +66,7 @@ public class GeoServiceImplTest {
 
     @Test
     @Order(5)
-    @DisplayName("Тест метода Location byIp. NEW_YORK_IP -> 96.*")
+    @DisplayName("Тест метода Location byIp. NEW_YORK_IP starts with 96.*")
     void test_96_IP_Location() {
         Location location = new Location("New York", Country.USA, null, 0);
         int comparing = myComparator.compare(location, geoService.byIp("96.0.00.00"));
