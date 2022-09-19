@@ -21,17 +21,17 @@ class LocalizationServiceImplTest {
 
     @Test
     @Order(1)
-    @DisplayName("Тест метода locale. Россия.")
-    void localeTest() {
+    @DisplayName("Тест метода locale Россия -> Добро пожаловать")
+    void localeReturnRightMessageRussia() {
         Assertions.assertEquals("Добро пожаловать",
                 localizationService.locale(Country.RUSSIA));
     }
 
     @Order(2)
     @ParameterizedTest
-    @DisplayName("Тест метода locale. All countries.")
+    @DisplayName("Тест метода locale. All countries")
     @MethodSource("getArguments")
-    void localeTest1(Country country, String expected) {
+    void localeReturnRightMessageEachCountry(Country country, String expected) {
         Assertions.assertEquals(expected, localizationService.locale(country));
     }
 
