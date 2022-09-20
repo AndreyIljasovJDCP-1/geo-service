@@ -79,14 +79,14 @@ public class GeoServiceImplTest {
 
     @Order(6)
     @ParameterizedTest
-    @DisplayName("Тест метода Location byIp Wrong IP -> null.")
+    @DisplayName("Тест метода Location byIp Wrong IP -> null")
     @ValueSource(strings = {"127.0.0.0", "95.5.0.0.0", "12.7.0.0.0", "17.2.0.0.0", "9 6.2.0.0.0"})
     void byIP_WrongIP_ReturnNull(String ip) {
         Assertions.assertNull(geoService.byIp(ip));
     }
 
     @Order(7)
-    @DisplayName("Тест метода Location byIp Empty or null IP -> null.")
+    @DisplayName("Тест метода Location byIp Empty or null IP -> null")
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = {" ", "   ", "\t", "\n"})

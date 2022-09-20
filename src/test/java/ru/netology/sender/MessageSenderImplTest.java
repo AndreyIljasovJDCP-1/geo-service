@@ -40,17 +40,8 @@ public class MessageSenderImplTest {
         messageSender = new MessageSenderImpl(geoService, localizationService);
     }
 
-    @Order(1)
-    @DisplayName("Тест метода locale Russia - > Добро пожаловать")
-    @ParameterizedTest
-    @EnumSource(names = {"RUSSIA"})
-    void localeReturnRussia(Country country) {
-        Mockito.when(localizationService.locale(country)).thenReturn("Добро пожаловать");
-        Assertions.assertEquals("Добро пожаловать", localizationService.locale(country));
-    }
-
     @Test
-    @Order(2)
+    @Order(1)
     @DisplayName("Тест метода send Moscow IP -> Добро пожаловать")
     void sendToMoscowIP() {
         String expectedPhrase = "Добро пожаловать";
@@ -67,7 +58,7 @@ public class MessageSenderImplTest {
     }
 
     @Test
-    @Order(3)
+    @Order(2)
     @DisplayName("Тест метода send New York IP -> Welcome")
     void sendToNY_IP() {
         String expectedPhrase = "Welcome";
@@ -83,26 +74,24 @@ public class MessageSenderImplTest {
         Assertions.assertEquals(expectedPhrase, messageSender.send(headers));
     }
 
-    @Order(4)
-    @DisplayName("Тест метода send IP starts with 172 -> Добро пожаловать")
+    @Order(3)
+    @DisplayName("Тест метода send IP starts with 172. -> Добро пожаловать")
     @ParameterizedTest
     @ValueSource(strings = {"172.123.12.19", "172.5.0.0.0", "172.0.0.1", "172.0.0.0"})
     void sendToRussianIP(String ip) {
         String expectedPhrase = "Добро пожаловать";
         Map<String, String> headers = new HashMap<>();
         headers.put(MessageSenderImpl.IP_ADDRESS_HEADER, ip);
-        String ipAddress = String.valueOf(headers.get(IP_ADDRESS_HEADER));
 
         Mockito.when(geoService.byIp(startsWith("172.")))
                 .thenReturn(new Location("Moscow", Country.RUSSIA, null, 0));
         Mockito.when(localizationService.locale(Mockito.eq(Country.RUSSIA)))
                 .thenReturn("Добро пожаловать");
-        String sentPhrase = messageSender.send(headers);
 
-        Assertions.assertEquals(expectedPhrase, sentPhrase);
+        Assertions.assertEquals(expectedPhrase, messageSender.send(headers));
     }
 
-    @Order(5)
+    @Order(4)
     @DisplayName("Тест метода send IP starts with 96. -> Welcome")
     @ParameterizedTest
     @ValueSource(strings = {"96.123.12.19", "96.5.0.0.0", "96.0.0.1", "96.0.0.0"})
@@ -110,15 +99,13 @@ public class MessageSenderImplTest {
         String expectedPhrase = "Welcome";
         Map<String, String> headers = new HashMap<>();
         headers.put(MessageSenderImpl.IP_ADDRESS_HEADER, ip);
-        String ipAddress = String.valueOf(headers.get(IP_ADDRESS_HEADER));
 
         Mockito.when(geoService.byIp(startsWith("96.")))
                 .thenReturn(new Location("New York", Country.USA, null, 0));
         Mockito.when(localizationService.locale(Mockito.eq(Country.USA)))
                 .thenReturn(expectedPhrase);
-        String sentPhrase = messageSender.send(headers);
 
-        Assertions.assertEquals(expectedPhrase, sentPhrase);
+        Assertions.assertEquals(expectedPhrase, messageSender.send(headers));
     }
 
 
