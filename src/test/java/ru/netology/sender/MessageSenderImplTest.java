@@ -107,7 +107,4 @@ public class MessageSenderImplTest {
 
         Assertions.assertEquals(expectedPhrase, messageSender.send(headers));
     }
-
-
-
 }

@@ -3,6 +3,7 @@ package ru.netology.geo;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import ru.netology.entity.Country;
@@ -95,6 +96,15 @@ public class GeoServiceImplTest {
         headers.put(MessageSenderImpl.IP_ADDRESS_HEADER, emptyIP);
         String ipAddress = String.valueOf(headers.get(MessageSenderImpl.IP_ADDRESS_HEADER));
         Assertions.assertNull(geoService.byIp(ipAddress), "null");
+    }
+    @Order(8)
+    @DisplayName("Тест метода byCoordinates not implemented")
+    @ParameterizedTest
+    @CsvSource(value = {"1.0:100.0", "0.0:0.1", "0:0"}, delimiter = ':')
+    void locationByCoordinatesThrowRuntimeException(double latitude, double longitude) {
+        Throwable exception = Assertions.assertThrows(RuntimeException.class,
+                () -> geoService.byCoordinates(latitude, longitude), "not_implemented");
+        Assertions.assertEquals("Not implemented", exception.getMessage());
     }
 }
 
